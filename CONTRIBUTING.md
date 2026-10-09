@@ -104,6 +104,22 @@ docs: update README with Azure AD examples
 6. Add examples in `examples/resources/`
 7. Write acceptance tests
 
+## Syncing with upstream
+
+This repository is derived from [muecahit94/terraform-provider-mssql](https://github.com/muecahit94/terraform-provider-mssql)
+and keeps its history. To bring in what upstream released since the last sync:
+
+```bash
+git checkout -b sync/upstream main
+scripts/sync-upstream.sh        # fetch, merge, rename the module path, build, test
+git push origin sync/upstream   # then open a pull request
+```
+
+Merge that pull request with a **merge commit**, never a squash: the merge commit is what makes `upstream/main` an
+ancestor, so the next sync only brings what is new. On conflicts the script says what to do; keep our side of the
+module path, the workflows, `.goreleaser.yml`, `CHANGELOG.md`, `README.md` and `CONTRIBUTING.md`. Changes that are
+useful to everybody belong in a pull request to upstream first.
+
 ## Releasing
 
 Releases are cut by pushing a version tag; there is no release bot:
