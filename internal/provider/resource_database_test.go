@@ -11,6 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/tfsdk"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-go/tftypes"
+	"github.com/nitra/terraform-provider-mssql/internal/mssql"
 )
 
 func TestDatabaseResourceSchema(t *testing.T) {
@@ -25,7 +26,7 @@ func TestDatabaseResourceSchema(t *testing.T) {
 	if diags := resp.Schema.ValidateImplementation(ctx); diags.HasError() {
 		t.Errorf("ValidateImplementation() returned errors: %v", diags.Errors())
 	}
-	for _, name := range []string{"collation", "compatibility_level", "recovery_model"} {
+	for _, name := range []string{"collation", "compatibility_level", "recovery_model", "owner_name", "auto_close", "auto_shrink", "page_verify", "snapshot_isolation", "read_committed_snapshot", "query_store", "trustworthy"} {
 		attr, ok := resp.Schema.Attributes[name]
 		if !ok {
 			t.Fatalf("attribute %q is missing", name)
@@ -158,4 +159,86 @@ func TestKeepCase(t *testing.T) {
 			t.Errorf("%s: keepCase() = %q, want %q", tt.name, got.ValueString(), tt.want)
 		}
 	}
+}
+
+func TestApplyDatabaseKeepsKnownCollation(t *testing.T) {
+	// A database that cannot be opened reports no collation: what the state knows stays.
+	data := DatabaseResourceModel{Collation: types.StringValue("Ukrainian_CI_AS")}
+	applyDatabase(&data, &mssql.Database{ID: 7, Name: "db", Collation: "", CompatibilityLevel: 150, RecoveryModel: "SIMPLE"})
+	if got := data.Collation.ValueString(); got != "Ukrainian_CI_AS" {
+		t.Errorf("collation = %q, want the known value to be kept", got)
+	}
+
+	// A reported collation always wins.
+	applyDatabase(&data, &mssql.Database{ID: 7, Name: "db", Collation: "Latin1_General_CI_AS", CompatibilityLevel: 150, RecoveryModel: "SIMPLE"})
+	if got := data.Collation.ValueString(); got != "Latin1_General_CI_AS" {
+		t.Errorf("collation = %q, want the reported one", got)
+	}
+
+	// Nothing known and nothing reported: an empty value, not a crash.
+	var fresh DatabaseResourceModel
+	applyDatabase(&fresh, &mssql.Database{ID: 7, Name: "db"})
+	if fresh.Collation.IsNull() || fresh.Collation.IsUnknown() {
+		t.Error("an empty collation must still be a known value")
+	}
+}
+
+func TestDeletionProtectionDiagnostics(t *testing.T) {
+	if diags := deletionProtectionDiagnostics("app", true); !diags.HasError() {
+		t.Error("a protected database must not be deleted")
+	}
+	if diags := deletionProtectionDiagnostics("app", false); diags.HasError() {
+		t.Errorf("an unprotected database may be deleted: %v", diags.Errors())
+	}
+}
+
+func TestDatabaseDeletionProtectionSchema(t *testing.T) {
+	ctx := context.Background()
+	resp := &fwresource.SchemaResponse{}
+	NewDatabaseResource().Schema(ctx, fwresource.SchemaRequest{}, resp)
+
+	attr, ok := resp.Schema.Attributes["deletion_protection"]
+	if !ok {
+		t.Fatal("deletion_protection is missing")
+	}
+	// It defaults to false, so existing configurations do not change.
+	if !attr.IsOptional() || !attr.IsComputed() {
+		t.Error("deletion_protection must be Optional and Computed (with a default)")
+	}
+}
+
+func TestDatabaseSettingsSelection(t *testing.T) {
+	on, off := types.BoolValue(true), types.BoolValue(false)
+
+	t.Run("create applies only what is configured", func(t *testing.T) {
+		plan := DatabaseResourceModel{
+			AutoShrink: off,
+			PageVerify: types.StringValue("CHECKSUM"),
+			// unset attributes are unknown in a plan
+			AutoClose:             types.BoolUnknown(),
+			ReadCommittedSnapshot: types.BoolNull(),
+		}
+		s := databaseSettings(plan, nil)
+		if s.AutoShrink == nil || *s.AutoShrink {
+			t.Error("a configured auto_shrink must be applied")
+		}
+		if s.PageVerify == nil || *s.PageVerify != "CHECKSUM" {
+			t.Error("a configured page_verify must be applied")
+		}
+		if s.AutoClose != nil || s.ReadCommittedSnapshot != nil || s.QueryStore != nil {
+			t.Error("unset settings must be left alone")
+		}
+	})
+
+	t.Run("update applies only what changed", func(t *testing.T) {
+		state := DatabaseResourceModel{AutoClose: off, AutoShrink: on, PageVerify: types.StringValue("NONE"), Trustworthy: off}
+		plan := DatabaseResourceModel{AutoClose: off, AutoShrink: off, PageVerify: types.StringValue("NONE"), Trustworthy: on}
+		s := databaseSettings(plan, &state)
+		if s.AutoClose != nil || s.PageVerify != nil {
+			t.Error("unchanged settings must not be applied again")
+		}
+		if s.AutoShrink == nil || *s.AutoShrink || s.Trustworthy == nil || !*s.Trustworthy {
+			t.Error("changed settings must be applied")
+		}
+	})
 }

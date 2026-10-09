@@ -95,10 +95,12 @@ provider "mssql" {
 |----------|-------------|
 | `mssql_database` | SQL Server database |
 | `mssql_sql_login` | SQL Server login |
+| `mssql_windows_login` | Windows user or group login |
 | `mssql_sql_user` | Database user mapped to login |
 | `mssql_database_role` | Database role |
 | `mssql_database_role_member` | Database role membership |
 | `mssql_database_permission` | Database-level permission |
+| `mssql_database_object_permission` | Object- and column-level permission |
 | `mssql_schema` | Database schema |
 | `mssql_schema_permission` | Schema-level permission |
 | `mssql_linked_server` | Linked server |
@@ -106,6 +108,8 @@ provider "mssql" {
 | `mssql_server_role` | Server role |
 | `mssql_server_role_member` | Server role membership |
 | `mssql_server_permission` | Server-level permission |
+| `mssql_agent_job` | SQL Server Agent job with steps and schedules |
+| `mssql_server_configuration` | Server configuration option (`sp_configure`) |
 | `mssql_script` | Custom SQL script execution |
 | `mssql_azuread_user` | Azure AD user |
 | `mssql_azuread_service_principal` | Azure AD service principal |

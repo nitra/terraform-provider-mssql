@@ -6,6 +6,21 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## Unreleased
 
+Carries the upstream pull requests muecahit94/terraform-provider-mssql#36 to #45 (not merged upstream yet).
+
+### Added
+- `mssql_database_object_permission`: object- and column-level permissions (`GRANT`/`DENY` on tables, views, procedures).
+- `mssql_database`: `owner_name` (`ALTER AUTHORIZATION`), `deletion_protection`, and `auto_close`, `auto_shrink`,
+  `page_verify`, `snapshot_isolation`, `read_committed_snapshot`, `query_store`, `trustworthy` (also in the data sources).
+- `mssql_windows_login`: Windows users and groups as server logins.
+- `mssql_server_configuration`: one `sp_configure` option; the previous value is restored on destroy.
+- `mssql_agent_job`: SQL Server Agent jobs with steps and schedules.
+- `mssql_sql_user`: `login_name` can be changed in place (`ALTER USER ... WITH LOGIN`), which also fixes orphaned users.
+
+### Fixed
+- The collation of an `AUTO_CLOSE` database that is closed was read as empty, which made the plan fail.
+- `mssql_sql_login`: the password is optional for an existing login, and an import no longer shows `password: "" -> null`.
+
 ## [1.7.0] (2026-10-09)
 
 First release of the `nitra/mssql` build. It is based on upstream v1.6.0.

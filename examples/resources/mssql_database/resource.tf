@@ -10,4 +10,12 @@ resource "mssql_database" "example" {
   collation           = "SQL_Latin1_General_CP1_CI_AS"
   compatibility_level = 160
   recovery_model      = "SIMPLE"
+  owner_name          = "app_owner"
+
+  # Fail instead of dropping the database when it is removed from the configuration.
+  deletion_protection = true
+
+  page_verify             = "CHECKSUM"
+  auto_shrink             = false
+  read_committed_snapshot = true
 }
