@@ -183,6 +183,7 @@ func (p *MSSQLProvider) Resources(ctx context.Context) []func() resource.Resourc
 		NewSQLLoginResource,
 		NewAgentJobResource,
 		NewServerConfigurationResource,
+		NewWindowsLoginResource,
 		NewSQLUserResource,
 		NewDatabaseRoleResource,
 		NewDatabaseRoleMemberResource,
