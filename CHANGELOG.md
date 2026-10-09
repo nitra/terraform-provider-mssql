@@ -1,10 +1,14 @@
 # Changelog
 
-All notable changes of this repository (`nitra/terraform-provider-mssql`) relative to upstream are documented here. Format loosely follows
-[Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The history below the "Upstream" heading is the one of
+All notable changes of this repository (`nitra/terraform-provider-mssql`) relative to upstream are documented here.
+Format loosely follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The history below the "Upstream" heading is the one of
 [muecahit94/terraform-provider-mssql](https://github.com/muecahit94/terraform-provider-mssql) up to v1.6.0.
 
 ## Unreleased
+
+## [1.7.0] (2026-10-09)
+
+First release of the `nitra/mssql` build. It is based on upstream v1.6.0.
 
 ### Added
 - `mssql_linked_server` and `mssql_linked_server_login`, with a write-only remote password (`password_wo`). The
@@ -19,10 +23,14 @@ All notable changes of this repository (`nitra/terraform-provider-mssql`) relati
 ### Changed
 - The Go module is `github.com/nitra/terraform-provider-mssql` and the provider address is
   `registry.opentofu.org/nitra/mssql`.
-- This is a standalone repository derived from upstream, which is kept as history. Releases are cut by pushing a `v*` tag: GoReleaser builds `darwin_amd64`, `darwin_arm64`, `linux_amd64`,
-  `linux_arm64` and `windows_amd64` and signs the checksums with the `nitra` provider key. `release-please` is
-  removed.
+- This is a standalone repository derived from upstream, which is kept as history.
+- Releases are cut by pushing a `v*` tag: GoReleaser builds `darwin_amd64`, `darwin_arm64`, `linux_amd64`,
+  `linux_arm64` and `windows_amd64` and signs the checksums with the `nitra` provider key. A tag with a pre-release
+  suffix (`v1.7.0-rc.1`) becomes a GitHub pre-release. `release-please` is removed, and Dependabot keeps the Go
+  modules and the GitHub Actions up to date.
 - `golang.org/x/net` v0.60.0 (GO-2026-6617) and `github.com/golang-jwt/jwt/v5` v5.3.1 (GO-2025-3553).
+- Go modules updated: `terraform-plugin-framework` v1.19.0, `terraform-plugin-log` v0.11.0, `go-mssqldb` v1.11.2,
+  `azcore` v1.23.2 and `azidentity` v1.14.1.
 - Database names and collations are validated or escaped before they reach a statement.
 
 ### Fixed
