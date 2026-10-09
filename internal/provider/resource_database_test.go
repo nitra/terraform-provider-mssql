@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/tfsdk"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-go/tftypes"
-	"github.com/muecahit94/terraform-provider-mssql/internal/mssql"
+	"github.com/nitra/terraform-provider-mssql/internal/mssql"
 )
 
 func TestDatabaseResourceSchema(t *testing.T) {
@@ -180,5 +180,29 @@ func TestApplyDatabaseKeepsKnownCollation(t *testing.T) {
 	applyDatabase(&fresh, &mssql.Database{ID: 7, Name: "db"})
 	if fresh.Collation.IsNull() || fresh.Collation.IsUnknown() {
 		t.Error("an empty collation must still be a known value")
+	}
+}
+
+func TestDeletionProtectionDiagnostics(t *testing.T) {
+	if diags := deletionProtectionDiagnostics("app", true); !diags.HasError() {
+		t.Error("a protected database must not be deleted")
+	}
+	if diags := deletionProtectionDiagnostics("app", false); diags.HasError() {
+		t.Errorf("an unprotected database may be deleted: %v", diags.Errors())
+	}
+}
+
+func TestDatabaseDeletionProtectionSchema(t *testing.T) {
+	ctx := context.Background()
+	resp := &fwresource.SchemaResponse{}
+	NewDatabaseResource().Schema(ctx, fwresource.SchemaRequest{}, resp)
+
+	attr, ok := resp.Schema.Attributes["deletion_protection"]
+	if !ok {
+		t.Fatal("deletion_protection is missing")
+	}
+	// It defaults to false, so existing configurations do not change.
+	if !attr.IsOptional() || !attr.IsComputed() {
+		t.Error("deletion_protection must be Optional and Computed (with a default)")
 	}
 }
