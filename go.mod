@@ -3,8 +3,8 @@ module github.com/nitra/terraform-provider-mssql
 go 1.26.0
 
 require (
-	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.17.0
-	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.8.2
+	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.23.2
+	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.13.1
 	github.com/hashicorp/terraform-plugin-framework v1.14.0
 	github.com/hashicorp/terraform-plugin-go v0.26.0
 	github.com/hashicorp/terraform-plugin-log v0.9.0
@@ -12,8 +12,8 @@ require (
 )
 
 require (
-	github.com/Azure/azure-sdk-for-go/sdk/internal v1.10.0 // indirect
-	github.com/AzureAD/microsoft-authentication-library-for-go v1.3.3 // indirect
+	github.com/Azure/azure-sdk-for-go/sdk/internal v1.12.0 // indirect
+	github.com/AzureAD/microsoft-authentication-library-for-go v1.6.0 // indirect
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.1 // indirect
 	github.com/golang-sql/civil v0.0.0-20220223132316-b832511892a9 // indirect
