@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/muecahit94/terraform-provider-mssql/internal/mssql"
+	"github.com/nitra/terraform-provider-mssql/internal/mssql"
 )
 
 var _ datasource.DataSource = &ServerRoleDataSource{}

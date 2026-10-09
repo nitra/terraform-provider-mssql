@@ -15,7 +15,7 @@ Thank you for your interest in contributing! This document provides guidelines a
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/muecahit94/terraform-provider-mssql.git
+   git clone https://github.com/nitra/terraform-provider-mssql.git
    cd terraform-provider-mssql
    ```
 
@@ -52,7 +52,7 @@ Create a `.terraformrc` file in your home directory:
 ```hcl
 provider_installation {
   dev_overrides {
-    "muecahit94/mssql" = "/path/to/terraform-provider-mssql"
+    "nitra/mssql" = "/path/to/terraform-provider-mssql"
   }
   direct {}
 }
@@ -103,6 +103,20 @@ docs: update README with Azure AD examples
 5. Add documentation in `docs/resources/` and `docs/data-sources/`
 6. Add examples in `examples/resources/`
 7. Write acceptance tests
+
+## Releasing
+
+Releases are cut by pushing a version tag; there is no release bot:
+
+1. Move the entries of `## Unreleased` in `CHANGELOG.md` under a new `## [X.Y.Z] (date)` heading and merge that to `main`.
+2. Tag the merge commit and push the tag: `git tag vX.Y.Z && git push origin vX.Y.Z`.
+3. The `release` workflow runs GoReleaser: it builds `darwin_amd64`, `darwin_arm64`, `linux_amd64`, `linux_arm64`
+   and `windows_amd64`, writes `SHA256SUMS` plus the registry manifest and signs the checksums with the `nitra`
+   provider key (org secrets `GPG_PRIVATE_KEY` and `PASSPHRASE`; this repository must be one of the selected
+   repositories of those secrets).
+
+To check the build without a tag, signing or publishing:
+`go run github.com/goreleaser/goreleaser/v2@latest release --snapshot --clean --skip=sign,publish`.
 
 ## Testing
 

@@ -1,7 +1,7 @@
 .PHONY: build test testacc generate docs install lint fmt clean docker-up docker-down dev e2e-local e2e-azure e2e-full azure-infra-up azure-infra-down
 
-HOSTNAME=registry.terraform.io
-NAMESPACE=muecahit94
+HOSTNAME=registry.opentofu.org
+NAMESPACE=nitra
 NAME=mssql
 BINARY=terraform-provider-${NAME}
 VERSION=0.1.0

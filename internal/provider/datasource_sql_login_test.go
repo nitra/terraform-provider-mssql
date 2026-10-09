@@ -9,7 +9,7 @@ import (
 
 	fwdatasource "github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/muecahit94/terraform-provider-mssql/internal/mssql"
+	"github.com/nitra/terraform-provider-mssql/internal/mssql"
 )
 
 func TestSQLLoginDataSourceSchema(t *testing.T) {

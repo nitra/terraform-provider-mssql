@@ -6,7 +6,7 @@ This example demonstrates a complete setup with a database, login, user, role, a
 terraform {
   required_providers {
     mssql = {
-      source  = "muecahit94/mssql"
+      source  = "nitra/mssql"
       version = "~> 1.0"
     }
   }

@@ -1,5 +1,35 @@
 # Changelog
 
+All notable changes to this fork (`nitra/terraform-provider-mssql`) are documented here. Format loosely follows
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The history below the "Upstream" heading is the one of
+[muecahit94/terraform-provider-mssql](https://github.com/muecahit94/terraform-provider-mssql) up to v1.6.0.
+
+## Unreleased
+
+### Added
+- `mssql_linked_server` and `mssql_linked_server_login`, with a write-only remote password (`password_wo`). The
+  `provider_string` is sensitive. `product = "SQL Server"` together with `data_source` is rejected at plan time.
+- `collation`, `compatibility_level` and `recovery_model` for `mssql_database` and the `mssql_database` /
+  `mssql_databases` data sources. They are optional and computed, so existing configurations show no diff.
+  `compatibility_level` and `recovery_model` change in place; changing the `collation` of an existing database is
+  rejected at plan time instead of replacing (and dropping) the database.
+- `mssql_sql_user` supports Windows groups (principal type `G`) and users without a login: `login_name` is optional,
+  an omitted login creates the user `WITHOUT LOGIN`, and an orphaned user reads back with a null `login_name`.
+
+### Changed
+- The Go module is `github.com/nitra/terraform-provider-mssql` and the provider address is
+  `registry.opentofu.org/nitra/mssql`.
+- Releases are cut by pushing a `v*` tag: GoReleaser builds `darwin_amd64`, `darwin_arm64`, `linux_amd64`,
+  `linux_arm64` and `windows_amd64` and signs the checksums with the `nitra` provider key. `release-please` is
+  removed.
+- `golang.org/x/net` v0.60.0 (GO-2026-6617) and `github.com/golang-jwt/jwt/v5` v5.3.1 (GO-2025-3553).
+- Database names and collations are validated or escaped before they reach a statement.
+
+### Fixed
+- `mssql_sql_users` failed with `Incorrect syntax near '/'`: a stray comment was part of the SQL text.
+
+## Upstream
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),

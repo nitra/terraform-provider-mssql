@@ -13,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/muecahit94/terraform-provider-mssql/internal/mssql"
+	"github.com/nitra/terraform-provider-mssql/internal/mssql"
 )
 
 var _ datasource.DataSource = &SQLLoginDataSource{}

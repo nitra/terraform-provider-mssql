@@ -4,7 +4,7 @@ terraform {
 
   required_providers {
     mssql = {
-      source  = "muecahit94/mssql"
+      source  = "nitra/mssql"
       version = "~> 1.0"
     }
   }

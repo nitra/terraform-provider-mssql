@@ -20,7 +20,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	"github.com/muecahit94/terraform-provider-mssql/internal/mssql"
+	"github.com/nitra/terraform-provider-mssql/internal/mssql"
 )
 
 var _ resource.Resource = &SQLLoginResource{}

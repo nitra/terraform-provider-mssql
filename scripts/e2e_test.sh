@@ -27,7 +27,7 @@ PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 SA_PASSWORD="P@ssw0rd123!"
 SQL_HOST="localhost"
 SQL_PORT="1433"
-PROVIDER_NAME="muecahit94/mssql"
+PROVIDER_NAME="nitra/mssql"
 
 # Helper functions
 log_info() {

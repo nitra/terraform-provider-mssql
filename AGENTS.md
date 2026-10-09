@@ -56,7 +56,7 @@ Create a **modern, reliable Terraform provider** for Microsoft SQL Server and Az
 
 ### Repository Structure
 - ✅ GitHub Actions CI (lint, tests, security, release)
-- ✅ Release automation (release-please)
+- ✅ Release automation (tag-triggered GoReleaser, GPG-signed)
 - ✅ Conventional commits
 - ✅ Terraform examples
 - ✅ Documentation (README, resource/data source docs)
@@ -156,7 +156,7 @@ Resources handle edge cases gracefully:
 ### Workflows
 - **ci.yml**: lint, unit tests, security (govulncheck), multi-platform build
 - **acceptance.yml**: Manual trigger for acceptance tests
-- **release.yml**: release-please + goreleaser
+- **release.yml**: goreleaser on a `v*` tag, GPG-signed checksums for registry.opentofu.org
 
 ---
 
@@ -165,7 +165,6 @@ Resources handle edge cases gracefully:
 - [x] `.github/workflows/ci.yml`
 - [x] `.github/workflows/acceptance.yml`
 - [x] `.github/workflows/release.yml`
-- [x] `release-please-config.json`
 - [x] `Makefile`
 - [x] `examples/`
 - [x] `docs/`

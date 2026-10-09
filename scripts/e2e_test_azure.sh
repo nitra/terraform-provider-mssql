@@ -20,7 +20,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 INFRA_DIR="$PROJECT_ROOT/examples/testing/azure_ad/infrastructure"
 RESOURCES_DIR="$PROJECT_ROOT/examples/testing/azure_ad/mssql_resources"
-PROVIDER_NAME="muecahit94/mssql"
+PROVIDER_NAME="nitra/mssql"
 
 # Test results tracking
 TEST_NAMES=()
