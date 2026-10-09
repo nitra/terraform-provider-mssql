@@ -2,8 +2,9 @@
 
 A Terraform provider to manage Microsoft SQL Server and Azure SQL resources.
 
-This is the `nitra` fork of [muecahit94/terraform-provider-mssql](https://github.com/muecahit94/terraform-provider-mssql),
-published for OpenTofu as `nitra/mssql`. It adds what is not (yet) in upstream and is sent upstream as pull requests:
+This is the `nitra` build of [muecahit94/terraform-provider-mssql](https://github.com/muecahit94/terraform-provider-mssql),
+published for OpenTofu as `nitra/mssql`. It is a standalone repository (not a GitHub fork) that keeps the upstream
+history and its MIT licence. It adds what is not (yet) in upstream, and those changes are sent upstream as pull requests:
 
 - `mssql_linked_server` and `mssql_linked_server_login` (write-only remote password);
 - `collation`, `compatibility_level` and `recovery_model` for `mssql_database` and its data sources;

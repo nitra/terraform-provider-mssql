@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to this fork (`nitra/terraform-provider-mssql`) are documented here. Format loosely follows
+All notable changes of this repository (`nitra/terraform-provider-mssql`) relative to upstream are documented here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The history below the "Upstream" heading is the one of
 [muecahit94/terraform-provider-mssql](https://github.com/muecahit94/terraform-provider-mssql) up to v1.6.0.
 
@@ -19,7 +19,7 @@ All notable changes to this fork (`nitra/terraform-provider-mssql`) are document
 ### Changed
 - The Go module is `github.com/nitra/terraform-provider-mssql` and the provider address is
   `registry.opentofu.org/nitra/mssql`.
-- Releases are cut by pushing a `v*` tag: GoReleaser builds `darwin_amd64`, `darwin_arm64`, `linux_amd64`,
+- This is a standalone repository derived from upstream, which is kept as history. Releases are cut by pushing a `v*` tag: GoReleaser builds `darwin_amd64`, `darwin_arm64`, `linux_amd64`,
   `linux_arm64` and `windows_amd64` and signs the checksums with the `nitra` provider key. `release-please` is
   removed.
 - `golang.org/x/net` v0.60.0 (GO-2026-6617) and `github.com/golang-jwt/jwt/v5` v5.3.1 (GO-2025-3553).
