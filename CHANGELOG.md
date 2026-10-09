@@ -29,6 +29,8 @@ First release of the `nitra/mssql` build. It is based on upstream v1.6.0.
   suffix (`v1.7.0-rc.1`) becomes a GitHub pre-release. `release-please` is removed, and Dependabot keeps the Go
   modules and the GitHub Actions up to date.
 - `golang.org/x/net` v0.60.0 (GO-2026-6617) and `github.com/golang-jwt/jwt/v5` v5.3.1 (GO-2025-3553).
+- Go modules updated: `terraform-plugin-framework` v1.19.0, `terraform-plugin-log` v0.11.0, `go-mssqldb` v1.11.2,
+  `azcore` v1.23.2 and `azidentity` v1.14.1.
 - Database names and collations are validated or escaped before they reach a statement.
 
 ### Fixed
