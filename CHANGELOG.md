@@ -6,10 +6,17 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## Unreleased
 
+## [1.8.2] (2026-10-10)
+
 ### Fixed
 - `mssql_server_configuration` failed with `Could not find stored procedure 'RECONFIGURE'`: the statement is now sent as a batch.
 - `mssql_windows_login`: a failing `DISABLE` no longer leaves a half-created login behind. SQL Server cannot disable the
   login of a Windows group; this is documented.
+
+## [1.8.1] (2026-10-10)
+
+### Changed
+- Go 1.27 and all Go modules updated; the GitHub Actions of the workflows are on their latest major versions.
 
 ## [1.8.0] (2026-10-10)
 
