@@ -6,6 +6,8 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## Unreleased
 
+## [1.8.0] (2026-10-10)
+
 Carries the upstream pull requests muecahit94/terraform-provider-mssql#36 to #45 (not merged upstream yet).
 
 ### Added
