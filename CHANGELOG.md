@@ -6,6 +6,11 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## Unreleased
 
+### Fixed
+- `mssql_server_configuration` failed with `Could not find stored procedure 'RECONFIGURE'`: the statement is now sent as a batch.
+- `mssql_windows_login`: a failing `DISABLE` no longer leaves a half-created login behind. SQL Server cannot disable the
+  login of a Windows group; this is documented.
+
 ## [1.8.0] (2026-10-10)
 
 Carries the upstream pull requests muecahit94/terraform-provider-mssql#36 to #45 (not merged upstream yet).
